@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  image         String?
+  role          String         @default("BUYER") // BUYER | VENDOR | ADMIN
+  createdAt     DateTime       @default(now())
+  vendor        VendorProfile?
+  orders        Order[]        @relation("BuyerOrders")
+}
+
+model VendorProfile {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shopName    String
+  shopSlug    String    @unique
+  description String?
+  logo        String?
+  banner      String?
+  status      String    @default("VERIFIED") // PENDING | VERIFIED | SUSPENDED
+  commission  Float     @default(0.05)
+  phone       String?
+  address     String?
+  city        String?   @default("Abidjan (Côte d’Ivoire)")
+  products    Product[]
+  orders      Order[]   @relation("VendorOrders")
+  createdAt   DateTime  @default(now())
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  icon     String?
+  products Product[]
+}
+
+model Product {
+  id               String          @id @default(cuid())
+  vendorId         String
+  vendor           VendorProfile   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  name             String
+  slug             String          @unique
+  description      String?
+  categoryId       String
+  category         Category        @relation(fields: [categoryId], references: [id])
+  image            String
+  basePrice        Float
+  city             String          @default("Abidjan (Côte d’Ivoire)")
+  neighborhood     String?         @default("Cocody")
+  condition        String          @default("Neuf scellé")
+  deliveryEstimate String?         @default("Livraison aujourd’hui")
+  isPublished      Boolean         @default(true)
+  stock            Stock?
+  orderItems       OrderItem[]
+  createdAt        DateTime        @default(now())
+}
+
+model Stock {
+  id        String          @id @default(cuid())
+  productId String          @unique
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  vendorId  String
+  sku       String?         @unique
+  quantity  Int             @default(0)
+  reserved  Int             @default(0)
+  lowAlert  Int             @default(5)
+  movements StockMovement[]
+  updatedAt DateTime        @updatedAt
+}
+
+model StockMovement {
+  id        String   @id @default(cuid())
+  stockId   String
+  stock     Stock    @relation(fields: [stockId], references: [id], onDelete: Cascade)
+  type      String   // IN | OUT | ADJUSTMENT | RESERVATION | RELEASE
+  quantity  Int
+  reason    String?
+  orderId   String?
+  createdBy String   @default("system")
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  orderNumber   String        @unique
+  buyerId       String?
+  buyer         User?         @relation("BuyerOrders", fields: [buyerId], references: [id])
+  vendorId      String
+  vendor        VendorProfile @relation("VendorOrders", fields: [vendorId], references: [id])
+  status        String        @default("Nouvelle demande") // Nouvelle demande | En préparation | Livrée | Annulée
+  total         Float
+  commission    Float         @default(0)
+  vendorAmount  Float         @default(0)
+  clientName    String
+  clientPhone   String
+  clientCity    String
+  clientAddress String?
+  paymentMethod String        @default("Espèces à la livraison")
+  customerNote  String?
+  items         OrderItem[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Float
+  total     Float
+}

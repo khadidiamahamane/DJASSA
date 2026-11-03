@@ -1,0 +1,54 @@
+﻿{
+  "project": "DJASSA",
+  "description": "Marketplace multi-vendeurs avec gestion de stock",
+  "agents": [
+    {
+      "id": "fullstack-architect",
+      "file": "agents/fullstack-architect.md",
+      "role": "Architecture technique globale",
+      "triggers": ["architecture", "structure projet", "configuration", "tech stack", "démarrer le projet"]
+    },
+    {
+      "id": "database-modeler",
+      "file": "agents/database-modeler.md",
+      "role": "Schéma BDD et migrations Prisma",
+      "triggers": ["prisma", "migration", "base de données", "schéma", "modèle de données", "requête SQL"]
+    },
+    {
+      "id": "stock-manager",
+      "file": "agents/stock-manager.md",
+      "role": "Logique métier gestion de stock",
+      "triggers": ["stock", "inventaire", "réapprovisionnement", "stock bas", "mouvement de stock"]
+    },
+    {
+      "id": "vendor-profile",
+      "file": "agents/vendor-profile.md",
+      "role": "Profils vendeurs et authentification",
+      "triggers": ["vendeur", "profil", "inscription", "dashboard vendeur", "boutique", "onboarding"]
+    },
+    {
+      "id": "order-processor",
+      "file": "agents/order-processor.md",
+      "role": "Commandes et paiements",
+      "triggers": ["commande", "panier", "paiement", "stripe", "mobile money", "checkout", "remboursement"]
+    },
+    {
+      "id": "analytics-reporter",
+      "file": "agents/analytics-reporter.md",
+      "role": "Analytics et tableaux de bord",
+      "triggers": ["analytics", "rapports", "KPI", "graphiques", "performance", "statistiques"]
+    },
+    {
+      "id": "ui-designer",
+      "file": "agents/ui-designer.md",
+      "role": "Interface utilisateur et composants",
+      "triggers": ["UI", "composant", "page", "design", "responsive", "interface", "frontend"]
+    },
+    {
+      "id": "security-auditor",
+      "file": "agents/security-auditor.md",
+      "role": "Sécurité et protection des données",
+      "triggers": ["sécurité", "RGPD", "vulnérabilité", "authentification", "permissions", "RLS", "audit"]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Djassa & Marché - Achats et Ventes Simples",
+  "description": "La marketplace simple et rapide pour trouver vos produits, contacter des vendeurs de confiance et commander en toute sérénité en FCFA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

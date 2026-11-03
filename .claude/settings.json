@@ -1,0 +1,20 @@
+﻿{
+  "project": "DJASSA",
+  "version": "1.0.0",
+  "language": "fr",
+  "tech": {
+    "framework": "Next.js 14",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS + shadcn/ui",
+    "database": "PostgreSQL (Supabase)",
+    "orm": "Prisma",
+    "auth": "NextAuth.js"
+  },
+  "conventions": {
+    "components": "PascalCase",
+    "functions": "camelCase",
+    "files": "kebab-case",
+    "noAny": true,
+    "strictMode": true
+  }
+}
